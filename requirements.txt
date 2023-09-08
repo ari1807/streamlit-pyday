@@ -1,0 +1,5 @@
+streamlit==1.26.*
+pandas==2.0.*
+streamlit-reveal-slides==0.2.*
+streamlit-extras==0.3.*
+plotly==5.16.*
