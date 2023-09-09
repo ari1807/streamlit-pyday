@@ -1,5 +1,23 @@
 import streamlit as st
 import reveal_slides as rs
+from streamlit_extras.app_logo import add_logo
+
+from PIL import Image
+from pathlib import Path
+
+pyday_logo_path = Path(Path(__file__).parent.parent, "public", "images",
+    "pyday-logo.png")
+
+st.set_page_config(layout="centered", 
+                   menu_items=
+                   {
+                       'Report a bug': "https://www.github.com/ari1807/streamlit-pyday/issues",
+                       'About': "Hecho por Ariadna Aspitia para el PyDay La Plata 2023"
+                    },
+                    page_icon=Image.open(pyday_logo_path))
+
+logo = add_logo(pyday_logo_path)
+
 
 content_markdown = r"""
 
@@ -24,15 +42,14 @@ Es un framework de desarrollo de aplicaciones web open-source escrito en Python 
 
 --
 
-Fue creado para equipos de *Data Science* y *Machine Learning*. Está orientado a la ciencia de datos
+Fue creado para equipos de *Data Science* y *Machine Learning*. Está orientado a la ciencia de datos.
 
 --
 
 ## Abstrae al desarrollador de:
-* Creación de HTML, CSS, Javascript <!-- .element: class="fragment" data-fragment-index="0" -->
-* Creacion de endpoints <!-- .element: class="fragment" data-fragment-index="1" -->
-* Integración entre el frontend y el backend <!-- .element: class="fragment" data-fragment-index="2" -->
-* etc <!-- .element: class="fragment" data-fragment-index="3" -->
+* Escribir HTML, CSS, Javascript <!-- .element: class="fragment" data-fragment-index="0" -->
+* Crear los endpoints de la aplicación <!-- .element: class="fragment" data-fragment-index="1" -->
+* Integrar el frontend con el backend <!-- .element: class="fragment" data-fragment-index="2" -->
 
 ---
 
@@ -52,19 +69,24 @@ Luego se puede instalar en con el manejador de paquetes <a target="_blank" href=
 pip install streamlit
 ```
 
+
 ---
 
 ## Aprendizaje
 
-Streamlit tiene una curva de aprendizaje muy leve. Tener una página funcionando es tan
-sencillo como importar la librería streamlit en un script de python y ejecutar 
+Streamlit es muy fácil de aprender. Tener una página funcionando es tan
+sencillo como importar la librería de streamlit en un script de Python, escribir alguna línea de código y ejecutar: 
 ```bash
 streamlit run <file>.py
+```
+o como un módulo de Python:
+```bash
+python -m streamlit run <file>.py
 ```
 
 --
 
-Tiene una comunidad activa, que se encuentra haciendo mejoras periódicamente.
+Tiene una `comunidad activa`, que se encuentra haciendo mejoras periódicamente. Se puede ver en su <a target="_blank" href="https://roadmap.streamlit.app/">roadmap</a> en qué nuevas funcionalidades se encuentran trabajando.
 
 --
 
@@ -80,39 +102,52 @@ Dejan a disposición mucho material de aprendizaje:
 
 ## Componentes
 
-Los *componentes* son 
+Los <a target="_blank" href="https://streamlit.io/components">*componentes*</a> son módulos de terceros que extienden las posibilidades de Streamlit.
+Estos componentes son escritos en JavaScript y HTML y pueden ser renderizados en aplicaciones de Streamlit. Una vez hechos, se envuelven en un paquete Python y se comparten con la comunidad.
+--
+
+Para instalar un componente basta con ejecutar:
+```bash
+pip install <componente>
+```
 
 ---
 
 ## Despliegue
 
-Streamlit Community Cloud te permite desplegar tu aplicación y disponibilizarla en internet completamente gratis.
+Streamlit provee documentación sobre cómo conteneirizar y desplegar una aplicación Streamlit en <a target="_blank" href="https://docs.streamlit.io/knowledge-base/tutorials/deploy/docker">Docker</a>
+y <a target="_blank" href="https://docs.streamlit.io/knowledge-base/tutorials/deploy/kubernetes">Kubernetes</a>. También desde la documentación referencia distintos tutoriales para desplegar Streamlit en distintas nubes.
+
+--
+
+## Streamlit Community Cloud
+
+Streamlit Community Cloud es una opción interesante y sencilla de desplegar tu aplicación y disponibilizarla en internet completamente gratis.
 
 --
 
 Streamlit se encarga de:
 * La conteneirización de la aplicación.
 * El despliegue de la misma.
-* Mantener la sincronización con el repositorio.
+* Mantener la sincronización con el repositorio donde tengas tu código.
 
 > Todos los cambios que se realicen en los scripts del repositorio se verán reflejados en la aplicación casi inmediatamente.
 
 --
 
 ### Pasos:
-- Registrarse en Streamlit Community Cloud con alguna cuenta de email.
-- Integrar con una cuenta de Github.
+- Registrarse en <a target="_blank" href="share.streamlit.io/signup.">Streamlit Community Cloud</a> con alguna cuenta de email.
+- Integrar con una cuenta de Github. Una vez hecho esto, se te redirigirá a tu Workspace de Streamlit.
 - Crear un repositorio con los scripts.
-- Desde Stremlit Community Cloud, indicar el repositorio de despliegue.
-
+- Desde Streamlit Community Cloud, hacer clic en `New app` e indicar el repositorio de la aplicación.
 --
 
-Luego de unos minutos podrás acceder a tu página web Streamlit desde la URL `nombre-despliegue.streamlit.app`
-
-
+Luego de unos minutos podrás acceder a tu página web Streamlit desde la URL `<nombre-elegido>.streamlit.app`
 
 ---
-## Fin
+
+## Ejemplo
+
 """
 
 
@@ -126,6 +161,3 @@ presentation = rs.slides(content_markdown, height=500, theme=theme,
         initial_state={"indexh": 0, "indexv": 0, "indexf": -1, "paused": False,
             "overview": False}, markdown_props={"data-separator-vertical": "^--$"},
         key="presentation")
-
-if presentation["indexh"] == 0:
-    st.markdown("La presentación es...")
